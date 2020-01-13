@@ -7,19 +7,29 @@ Execute webpack
 ./node_modules/.bin/webpack --watch --display-chunks
 ```
 
-The default bundle size is around 7.8mb.
+The default bundle size is around 7.8mb (development mode).
 
-1) in `node_modules/plotly.js/lib/index.js`, only require the modules/plot types that are really needed
+Steps to reduce the size:
 
-This can bring the bundle size to around 2.5mb
+1) edit `node_modules/plotly.js/lib/index.js`
 
-2) in `node_modules/plotly.js/src/core.js`, comment the requires not used (example: "require('./components/fx')")
+Only require the modules/plot types that are really needed. This can bring the bundle size to around 2.5mb
 
-This can bring the bundle size to around 2.0mb
+2) edit `node_modules/plotly.js/src/core.js`
 
-3) in `node_modules/plotly.js/src/plot_api/plot_api.js`, comment "require('../plots/polar/legacy')"
+Comment the modules that don't aren't being used (example: "require('./components/fx')"). This can bring the bundle size to around 2.0mb
+
+3) edit `node_modules/plotly.js/src/plot_api/plot_api.js`
+
+Comment "require('../plots/polar/legacy')"
 
 This can bring the bundle size to around 1.9mb	
 
-TODO: use the webpack visualizer 
-TODO: output as lib
+
+## Alternative approach to commenting the plotly.js source code 
+
+In webpack.config.js we can use 'null-loader' for the modules we want to ignore.
+
+TODO: 
+- use the webpack visualizer 
+- output as lib
